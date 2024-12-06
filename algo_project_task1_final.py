@@ -122,19 +122,8 @@ def run_experiment_sorted(n_values, k_values, num_runs=5):
 avg_times_sorted = run_experiment_sorted(n_values, k_values)
 
 # Compare the results with random arrays
-plt.figure(figsize=(12, 6))
+plt.figure(figsize=(10, 6))
 
-# Random arrays plot
-plt.subplot(1, 2, 1)
-for n in n_values:
-    plt.plot(k_values, avg_times[n], label=f'n = {n}')
-plt.xlabel('K (Threshold for Insertion Sort)')
-plt.ylabel('Average Time (Seconds)')
-plt.title('Hybrid Sort: Random Arrays')
-plt.legend()
-
-# Sorted arrays plot
-plt.subplot(1, 2, 2)
 for n in n_values:
     plt.plot(k_values, avg_times_sorted[n], label=f'n = {n}')
 plt.xlabel('K (Threshold for Insertion Sort)')
@@ -145,3 +134,18 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 
+#Optimal K for Sorted Array Plot:
+optimal_ks = []
+for n in n_values:
+    runtimes_for_n = avg_times_sorted[n]  # Average runtimes for this n
+    optimal_k = k_values[np.argmin(runtimes_for_n)]  # Find K with minimum runtime
+    optimal_ks.append(optimal_k)
+
+# Plot optimal K as a function of n
+plt.figure(figsize=(10, 6))
+plt.plot(n_values, optimal_ks, marker='o')
+plt.xlabel('Array Size (n)')
+plt.ylabel('Optimal Threshold (K)')
+plt.title('Optimal K as a Function of Array Size (n)')
+plt.grid()
+plt.show()
